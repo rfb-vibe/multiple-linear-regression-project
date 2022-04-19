@@ -1,5 +1,7 @@
 # Advising On Influences On Sale Price in King County, WA
- Using multiple linear regression modeling to analyze house sales in King County, WA
+
+**Authors**: [Rebecca Frost-Brewer](https://www.linkedin.com/in/rebecca-frost-brewer/)
+<img src="images/rfb-headshot.png" alt="headshot" style="width: 100px;" align="left"/>
 
 
 ## Business Understanding
@@ -149,7 +151,7 @@ All of our features have statistically significant coefficients except Poor and 
 1. Complete a renovation project to add square footage of living space to the home, which can increase the sale price of the home by **140,880 dollars**
 
 
-## Recommendations
+## Final Recommendations
 
 Our final model, looking at all home features homesellers can control to improve the sale price of their home, performs the best when compared to the baseline model.
 
@@ -157,4 +159,17 @@ Based on the effect all these features have on sale price, Emerald City Realtors
 
 If increasing the square footage of the home is impossible, we should recommend a renovation project that improves a home's condition from Fair to Good, which would increase the sale price of the home by 39,627 dollars.
 
-## Conclusion
+## For More Information
+
+Please review our full analysis in [our Jupyter Notebook](./jnb-phase-2-project.ipynb) or our [presentation](./phase-2-project-presentation.pdf).
+
+For any additional questions, please contact **Rebecca Frost-Brewer (frostbrewerr@gmail.com)**
+
+## Repository Structure
+
+```
+├── README.md                                   <- The top-level README for reviewers of this project
+├── jnb-phase-2-project.ipynb               <- Narrative documentation of analysis in Jupyter notebook
+├── phase-2-project-presentation.pdf    <- PDF version of project presentation
+└── data                             <- Sourced externally
+```
