@@ -1,163 +1,91 @@
-# Advising On Influences On Sale Price in King County, WA
+# Housing Sale Price Analysis in King County, WA
 
 **Authors**: [Rebecca Frost-Brewer](https://www.linkedin.com/in/rebecca-frost-brewer/)
-<img src="images/rfb-headshot.png" alt="headshot" style="width: 100px;" align="left"/>
+<img src="img/rfb-headshot.png" alt="headshot" style="width: 100px;" align="left"/>
 
+***
+
+<img src="img/skyline.png" alt="bellevue skyline" style="width: 100px;" align="left"/>
 
 ## Business Understanding
-As the data scientist for Emerald City Realtors, a realty firm dedicated to affordable housing, I have been asked by our lead executives to analyze sales data from 2014-2015 in order to create a list of advice the realtors can provide to prospective homesellers about what they can do to increase the estimated value of their homes, and by what amount.
+Emerald City Realtors serves the King County community, providing prospective home sellers with guidance on how to improve the value of their home prior to listing. 
 
-The stakeholders here are the lead executives of Emerald City Realtors who are seeking to solve a real-world problem: providing prospective homesellers of affordable homes advice on how to increase the estimated value of their home, and by what amount.
+* **Stakeholder**: Emerald City Realtors
+* **Business Problem**: Emerald City Realtors need to provide prospective home sellers with guidance on how to improve the value of their home prior to listing, including the predicted increase in value expected based on improvements to particular features.
+* **Business Question**: What features of their home can prospective home sellers change or improve to increase the value of their home, and by amount could this increase be specific to certain features?
 
-Data-informed recommendations based on data analysis will help lead executives accurately and confidently advise prospective homesellers within the affordable home market.
+These recommendations will be valuable to Emerald City Realtors because they will help prospective home sellers confidently ascertain how they can improve the value of their home, and if the investment is worth the cost.
 
 
 ## Data Understanding
+
 This project uses the King County House Sales dataset because Emerald City Realtors and its prospective homesellers are all based in King County. The dataset includes all data of single-family home sales from 2014-2015. The dataset itself can be found in `kc_house_data.csv` in the data folder of this GitHub repository along with the descriptions of the features, found in `column_names.md` Further information about the features can be found on the [King County Assessor Website](https://info.kingcounty.gov/assessor/esales/Glossary.aspx?type=r)
 
+<img src="img/seattle.png" alt="seattle" style="width: 100px;" align="left"/>
+
+The original dataset includes sales data for 21,597 homes with 20 different features, which include:
+
+* `date` - Date house was sold
+* `price` - Sale price (prediction target)
+* `bedrooms` - Number of bedrooms
+* `bathrooms` - Number of bathrooms
+* `sqft_living` - Square footage of living space in the home
+* `sqft_lot` - Square footage of the lot
+* `floors` - Number of floors (levels) in house
+* `waterfront` - Whether the house is on a waterfront
+* `view` - Quality of view from house
+* `condition` - How good the overall condition of the house is. Related to maintenance of house
+* `grade` - Overall grade of the house. Related to the construction and design of the house
+* `sqft_above` - Square footage of house apart from basement
+* `sqft_basement` - Square footage of the basement
+* `yr_built` - Year when house was built
+* `yr_renovated` - Year when house was renovated
+* `zipcode` - ZIP Code used by the United States Postal Service
+
+## Data Processing
+
+To assist with creating sound models, we completed some data cleaning including:
+
+* Dropping unrelated features to our business question (ID, sale date, zipcode, latitude, longitude, lot size, and the lot size and living space of a home's 15 closest neighbords)
+* Dummy-encode categorical variables (`condition` and `grade`)
+* Create binary variables for waterfront, view, and renovation status
 
 ## Modeling
-## Baseline Model
 
-This is our extremely simple model we will use for comparison throughout our investigation on the features that may affect sale price and to what degree.
+We are showing correlation and using regression coefficients in this analysis to be able to show the relationship between one or more features with sale price.
 
-### Regression Results: Baseline Model
+Using regression and interpreting correlation coefficients is effective for this business problem because it will allow for us to determine how sale price is impacted by different features and to what degree.
 
-**Findings**
-Our dependent, target variable is sale price and our explanatory, independent variable is square feet of living space (sqft_living). This model's performance is fine - it explains 39% of variance in the data.
+Buildng complex models with multiple features allows for us to be able to make more accurate, data-driven predictions.
 
-The F-test measures the significance of the model relative to a model in which all coefficients are 0, i.e. relative to a model that says there is no correlation whatever between the predictors and the target. This model F-statistic has a p-value less than .05 and thus is statistically significant such that the sqft_living feature is statistically significant in predicting sale price.
+## Regression Results
 
-The correlation coefficient of sqft_living has a p-value less that 0.05, so it is statistically signifcant. This measure indicates:
+In our final model comprising of all features except that of `cond_Poor`, `grade_12 Luxury`, and `reno_status`, our model's performance based on its adjusted R-squared improved from 38.98 percent to 57.5 percent.
 
-* For every one unit increase in sqft_living, the sale price increases 168.64 dollars
+Further, the Mean Absolute Error improved from our baseline score of 131878.02 to 106248.25, which is good.
 
-**Recommendation**
+In our final model, all features have a statistically significant linear relationship with sale price.
 
-1. Increase square footage of the living area 
+* While holding all other variables constant, the addition of a bathroom increases sale price by 29,020 dollars
+* While holding all other variables constant, the addition of one floor level increases sale price by 41,040 dollars
+* While holding all other variables constant, improving a home's condition from Average to Very Good increases sale price by 38,810 dollars
+* While holding all other variables constant, improving a home's grade from Better to High Quality increases sale price by 82,180 dollars
 
-## Iterative Model 1: Considering Quantitative Home Features
+## Recommendations
 
-To best advise the lead executives of Emerald City Realtors on actions prospectice homesellers can take to increase the estimated value of their home, and by what amount, this model will assess the quantitative features of a home: the number of bedrooms and bathrooms, the number of floors, and the square footage of the home, both living and basement. 
+1. Improve the grade of your home (construction quality) at a minimum to High Quality. An improvement from Better to High Quality is predicted to increase the sale price by 82,180 dollars
+2. Adding an additional bathroom to your home is predicted to increase its sale price by 29,020 dollars
+3. Each additional square foot of living space is predicted to add 81.12 dollars to the sale price; a 600-square foot addition would be predicted to increase the sale price by 48,672
 
-We are creating this model within the context of our problem, intending to improve the results of our baseline model by adding to the complexity of the features within the model. Focusing on the quantitative features keeps some consistency in the elements within the model.
+## Limitations and Next Steps
 
-### Regression Results: Quantitative Home Features Model
+Our model only explains 57.5 percent of the variation in sale price, so we ought to be cautious with our predictions and conclusions. Further, our final model does have high levels of heteroscedasticity, which violates one of the assumptions of linear regression, such that our conclusions may be premature without additional manipulation of the data.
 
-**Findings**
-Our dependent, target variable is sale price and our explanatory, independent variables are bedrooms, bathrooms, sqft_living, sqft_basement, and floors. This model's performance is minimally better than the baseline - it explains 40% of variance in the data.
+**Next Steps**:
 
-The F-test measures the significance of the model relative to a model in which all coefficients are 0, i.e. relative to a model that says there is no correlation whatever between the predictors and the target. This model F-statistic has a p-value less than .05 and thus is statistically significant such that all of these quantative features are statistically significant in predicting sale price.
+* Collect more recent sales data for more accurate representation of the market
+* Investigate influence of zipcode on sale price
 
-The correlation coefficients for bedrooms, floors, sqft_living, and sqft_basement all have p-values less than 0.05, which indicates they are all statistically significant. This model shows the following:
-
-* Holding all else constant, an increase in one bedroom unit decreases the price by 22,600 dollars
-* Holding all else constant, an increase in one bathroom unit decreases the price by 2,495 dollars
-* Holding all else constant, an increase in one sqft_living unit increases the price by 172.55 dollars
-* Holding all else constant, an increase in one floor unit increases the price by 34,730 dollars
-* Holding all else constant, an increase in one sqft_basement unit increases the price by 26.10 dollars
-
-Before making recommendations, let's check the assumptions for this model and explore the utilization of a standardized scale for analysis.
-
-### Apply Standardized Scaling
-
-One note about this model we've been analyzing is that the features are not on the same scale. In other words, the values and coefficients of each feature cannot be compared apples-to-apples as it were. Applying a standard scaler gives us the opportunity to compare across features without considering the different scales of values.
-
-**Findings**
-
-The performance metrics of this model are the same as the previous quantitative model; what differs is that large coefficients tend to be more influential and we can make direct comparisons across features.
-
-For example, holding everything else constant, adding an additional level to a home increases the sale price by 18,590 dollars, but an increase of one additional sqft of living space increases sale price by **133,900 dollars**.
-
-**Recommendation**
-
-If homesellers could change one quantitative feature of their home, we would recommend additional sqft of living space. This is a relevant recommendation because it is a possible solution to the problem of the project: advising prospective homesellers on what they can do to increase the sale price of their home.
-
-## Iterative Model 2: Considering Qualitative Home Features
-
-To best advise the lead executives of Emerald City Realtors on actions prospectice homesellers can take to increase the estimated value of their home, and by what amount, this model will assess the qualitative features of a home: the grade of the home (i.e., the construction quality of the home including materials and workmanship), the condition of the home (i.e., condition relative to the age and grade of the home), and renovation status. 
-
-We are creating this model within the context of our problem, intending to improve the results of our baseline model by adding to the complexity of the features within the model. Focusing on the qualitative features keeps some consistency in the elements within the model and allows for direct comparison between degrees of characteristics.
-
-### Regression Results: Qualitative Home Features Model
-
-**Findings**
-
-Our dependent, target variable is sale price and our explanatory, independent variables are qualitative features of a home, such as its grade, condition, or renovation status. This model's performance is a bit better than the baseline (39%), explaining 44.3% of variance in the data.
-
-The F-test measures the significance of the model relative to a model in which all coefficients are 0, i.e. relative to a model that says there is no correlation whatever between the predictors and the target. This model F-statistic has a p-value less than .05 and thus is statistically significant such that all of these qualitative features are statistically significant in predicting sale price.
-
-All of our features have statistically significant coefficients except Poor and Fair conditions and a Luxury grade, none of which have a statistically significant linear relationship to sale price.
-
-The most influential features show the following impact on sale price:
-
-* Increasing a home's condition from Good to Very Good increases the sale price by 9,950 dollars (meaning that all home items are well maintained, many having been overhauled and repaired)
-* Renovating a home increases the sale price by **23,300 dollars**
-* Improving a home's grade from Grade 9 (Better) to Grade 11 (Excellent) increases the sale price by **53,070 dollars** (meaning that the home has custom design features and higher quality finish work with added amenities of solid woods, bathroom fixtures and more luxurious options)
-
-**Recommendations**
-
-1. Advise potential homesellers to renovate their home, focusing on well-maintained home items, custom features, high quality finishes, and more luxurious options, which would increase the sale price by **76,370 dollars**
-
-## Iterative Model 3: Considering Most Influential Home Features
-
-To best advise the lead executives of Emerald City Realtors on actions prospectice homesellers can take to increase the estimated value of their home, and by what amount, this model will assess the most influential features from our previous two models (both the quantitative and qualitative models): square footage of living areas, Good and Very Good conditions of materials and workmanship quality, and Excellent grade (indicating custom design and luxurious finishes).
-
-We are creating this model within the context of our problem, intending to improve the results of our baseline model by adding to the complexity of the features within the model. Focusing on the most influential home features keeps some consistency in the elements within the model and allows for direct comparison between degrees of characteristics.
-
-### Regression Results: Most Influential Home Features Model
-
-**Findings**
-
-Our dependent, target variable is sale price and our explanatory, independent variables are the most influential features as measured by our previous models: sqft_living, Good and Very Good conditions, renovation status, Excellent( Grade 11), and number of floors.
-
-This model's performance is a bit better than the baseline (39%), explaining 41.5% of the variance, which, while better than the baseline, does not perform as well as the full qualitative model.
-
-The F-test measures the significance of the model relative to a model in which all coefficients are 0, i.e. relative to a model that says there is no correlation whatever between the predictors and the target. This model F-statistic has a p-value less than .05 and thus is statistically significant such that all of these qualitative features are statistically significant in predicting sale price.
-
-All of our features have statistically significant coefficients indicating a linear relationship with sale price and have the following effect on sale price:
-
-* Increasing a home's condition from Good to Very Good increases the sale price by 7,400 dollars
-* Renovating a home increases the sale price by **17,880 dollars**
-* Increasing the square footage of living area increases the sale price by **123,000 dollars**
-
-**Recommendations**
-
-1. Complete a renovation project to add square footage of living space to the home, which can increase the sale price of the home by **140,880 dollars**
-
-## Iterative Model 4: Considering All Home Features
-
-To best advise the lead executives of Emerald City Realtors on actions prospectice homesellers can take to increase the estimated value of their home, and by what amount, this model will assess all home features that homesellers can change or improve upon to increase the price of their home.
-
-We are creating this model within the context of our problem, intending to improve the results of our baseline model by adding to the complexity of the features within the model. This model looks at all features homesellers have control over.
-
-### Regression Results: All Home Features Model
-
-**Findings**
-
-Our dependent, target variable is sale price and our explanatory, independent variables are all home features that owners have the capacity to change in order to affect sale price, including square footage, bedrooms, grade, condition, and renovations.
-
-This model performs better than our previous three models, with an adjusted R-squared of 50.3%.
-
-All of our features have statistically significant coefficients except Poor and Fair conditions and Grade 12 (Luxury), neither of which have a statistically significant linear relationship to sale price. The coefficients demonstrate that:
-
-* Increasing a home's condition from Fair to Good increases the sale price by **19,367 dollars**
-* Increasing a home's condition from Good to Very Good increases the sale price by 8,840 dollars
-* Renovating a home increases the sale price by **20,260 dollars**
-* Increasing the square footage of living area by one unit increases the sale price by **65,920 dollars**
-
-**Recommendations**
-
-1. Complete a renovation project to add square footage of living space to the home, which can increase the sale price of the home by **140,880 dollars**
-
-
-## Final Recommendations
-
-Our final model, looking at all home features homesellers can control to improve the sale price of their home, performs the best when compared to the baseline model.
-
-Based on the effect all these features have on sale price, Emerald City Realtors should recommend to prospective homesellers that they complete a renovation project to add square footage of living space to the home, which can increase the sale price of the home by 140,880 dollars.
-
-If increasing the square footage of the home is impossible, we should recommend a renovation project that improves a home's condition from Fair to Good, which would increase the sale price of the home by 39,627 dollars.
 
 ## For More Information
 
@@ -171,5 +99,6 @@ For any additional questions, please contact **Rebecca Frost-Brewer (frostbrewer
 ├── README.md                                   <- The top-level README for reviewers of this project
 ├── jnb-phase-2-project.ipynb               <- Narrative documentation of analysis in Jupyter notebook
 ├── phase-2-project-presentation.pdf    <- PDF version of project presentation
+├── img                                <- images
 └── data                             <- Sourced externally
 ```
