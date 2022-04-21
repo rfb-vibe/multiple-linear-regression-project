@@ -8,7 +8,7 @@
 ## Business Understanding
 Emerald City Realtors serves the King County community, providing prospective home sellers with guidance on how to improve the value of their home prior to listing. 
 
-<img src="img/skyline.png" alt="bellevue skyline" style="width: 300px;" align="center"/>
+<img src="img/skyline.png" alt="bellevue skyline" style="width: 600px;" align="center"/>
 
 * **Stakeholder**: Emerald City Realtors
 * **Business Problem**: Emerald City Realtors need to provide prospective home sellers with guidance on how to improve the value of their home prior to listing, including the predicted increase in value expected based on improvements to particular features.
@@ -21,7 +21,7 @@ These recommendations will be valuable to Emerald City Realtors because they wil
 
 This project uses the King County House Sales dataset because Emerald City Realtors and its prospective homesellers are all based in King County. The dataset includes all data of single-family home sales from 2014-2015. The dataset itself can be found in `kc_house_data.csv` in the data folder of this GitHub repository along with the descriptions of the features, found in `column_names.md` Further information about the features can be found on the [King County Assessor Website](https://info.kingcounty.gov/assessor/esales/Glossary.aspx?type=r)
 
-<img src="img/seattle.png" alt="seattle" style="width: 300px;" align="center"/>
+<img src="img/seattle.png" alt="seattle" style="width: 600px;" align="center"/>
 
 The original dataset includes sales data for 21,597 homes with 20 different features, which include:
 
